@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Check if both arguments are provided
+if [[ $# -lt 2 ]]; then
+    echo "Usage: $0 <count> <reg-code>"
+    exit 1
+fi
+
+COUNT="$1"
+REG_CODE="$2"
+
+# Ensure count is a positive integer
+if ! [[ "$COUNT" =~ ^[0-9]+$ ]]; then
+    echo "Error: <count> must be a non-negative integer."
+    exit 1
+fi
+
+# loop doing suseconnect -r REG_CODE
+for (( i=1; i<=COUNT; i++ )); do
+    /usr/bin/suseconnect -r "${REG_CODE}"
+done
+
+exit 0

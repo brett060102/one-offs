@@ -1,0 +1,19 @@
+#!/bin/bash
+FILE="/tmp/rpm.data"
+STATE_FILE=/tmp/rpm.data.count
+if [[ ! -f ${STATE_FILE} ]]; then
+     wc -l < ${FILE} > ${STATE_FILE}
+fi
+
+OUTPUT_LENGTH=$(cat ${STATE_FILE})
+tail -n ${OUTPUT_LENGTH} ${FILE}
+
+UPDATE_COUNT=$((OUTPUT_LENGTH - 1))
+echo ${UPDATE_COUNT} > ${STATE_FILE}
+
+if [[ "${UPDATE_COUNT}" -lt 1 ]]; then
+    rm ${STATE_FILE}
+    exit 0
+fi
+
+exit 0
